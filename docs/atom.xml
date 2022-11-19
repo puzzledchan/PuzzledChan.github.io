@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
+    <title type="text">东风小站</title>
+    <subtitle type="html">MemE 是一个强大且可高度定制的 GoHugo 博客主题，专为个人博客设计。</subtitle>
+    <updated>2022-11-19T16:07:29&#43;08:00</updated>
+    <id>https://example.com/</id>
+    <link rel="alternate" type="text/html" href="https://example.com/" />
+    <link rel="self" type="application/atom&#43;xml" href="https://example.com/atom.xml" />
+    <author>
+            <name>JdongChen</name>
+            <uri>https://example.com/</uri>
+            </author>
+    <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights>
+    <generator uri="https://gohugo.io/" version="0.105.0">Hugo</generator>
+        <entry>
+            <title type="text">网站配置</title>
+            <link rel="alternate" type="text/html" href="https://example.com/posts/configblog/" />
+            <id>https://example.com/posts/configblog/</id>
+            <updated>2022-11-19T16:04:21&#43;08:00</updated>
+            <published>2022-11-19T16:03:29&#43;08:00</published>
+            <author>
+                    <name>JdongChen</name>
+                    <uri>https://jdongcoding.club/</uri>
+                    </author>
+            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">主题选取 Github Pages 搜索设置 同步到自有域名</summary>
+            
+                <content type="html">&lt;h2 id=&#34;主题选取&#34;&gt;主题选取&lt;/h2&gt;
+&lt;h2 id=&#34;github-pages&#34;&gt;Github Pages&lt;/h2&gt;
+&lt;h2 id=&#34;搜索设置&#34;&gt;搜索设置&lt;/h2&gt;
+&lt;h2 id=&#34;同步到自有域名&#34;&gt;同步到自有域名&lt;/h2&gt;
+</content>
+            
+            
+            
+            
+            
+                
+                    
+                
+                    
+                
+            
+        </entry>
+    
+</feed>
