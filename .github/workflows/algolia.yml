@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     name: algolia-crawler
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Upload Algolia Indexes
         uses: iChochy/Algolia-Upload-Records@main
         env:

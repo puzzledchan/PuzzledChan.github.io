@@ -1,0 +1,21 @@
+name: Sync Tencent Cloud
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  tencent:
+    runs-on: ubuntu-latest
+    name: cloud-sync
+    steps:
+      - uses: actions/checkout@v3
+      - name: Upload Tencent Files
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.TENCENT_REMOTE_HOST }} # 公网ip
+          username: ${{ secrets.TENCENT_REMOTE_USERNAME }} # 用户名
+          key: ${{ secrets.GITTEN_PRIVATE_KEY }} # 私钥
+          source: "./docs/*" # 发送文件
+          target: "./CloudWeb" # 目标目录
