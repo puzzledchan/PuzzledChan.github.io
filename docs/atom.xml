@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
     <title type="text">东风小站</title>
     <subtitle type="html">MemE 是一个强大且可高度定制的 GoHugo 博客主题，专为个人博客设计。</subtitle>
-    <updated>2022-11-21T09:46:01&#43;08:00</updated>
+    <updated>2022-11-21T13:15:46&#43;08:00</updated>
     <id>https://www.jdongcoding.club/</id>
     <link rel="alternate" type="text/html" href="https://www.jdongcoding.club/" />
     <link rel="self" type="application/atom&#43;xml" href="https://www.jdongcoding.club/atom.xml" />
@@ -18,7 +18,7 @@
             <title type="text">网站配置</title>
             <link rel="alternate" type="text/html" href="https://www.jdongcoding.club/posts/webconfig/" />
             <id>https://www.jdongcoding.club/posts/webconfig/</id>
-            <updated>2022-11-21T09:43:12&#43;08:00</updated>
+            <updated>2022-11-21T09:49:30&#43;08:00</updated>
             <published>2022-11-21T09:27:27&#43;08:00</published>
             <author>
                     <name>JdongChen</name>
