@@ -3,7 +3,7 @@ title: "网站配置"
 date: 2022-11-21T09:27:27+08:00
 draft: false
 toc: true
-tags: ["个人博客"] 
+tags: ["Blog"] 
 categories: ["配置"] 
 slug: ""
 ---
