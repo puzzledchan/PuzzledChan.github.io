@@ -8,7 +8,7 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>东风小站</title>
-        <link>https://example.com/</link>
+        <link>https://www.jdongcoding.club/</link>
         <description>MemE 是一个强大且可高度定制的 GoHugo 博客主题，专为个人博客设计。</description>
         <generator>Hugo 0.105.0 https://gohugo.io/</generator>
         
@@ -19,23 +19,28 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
         
-        <lastBuildDate>Sat, 19 Nov 2022 16:07:29 &#43;0800</lastBuildDate>
+        <lastBuildDate>Mon, 21 Nov 2022 09:46:01 &#43;0800</lastBuildDate>
         
-            <atom:link rel="self" type="application/rss&#43;xml" href="https://example.com/rss.xml" />
+            <atom:link rel="self" type="application/rss&#43;xml" href="https://www.jdongcoding.club/rss.xml" />
         
         
             <item>
                 <title>网站配置</title>
-                <link>https://example.com/posts/configblog/</link>
-                <guid isPermaLink="true">https://example.com/posts/configblog/</guid>
-                <pubDate>Sat, 19 Nov 2022 16:03:29 &#43;0800</pubDate>
+                <link>https://www.jdongcoding.club/posts/webconfig/</link>
+                <guid isPermaLink="true">https://www.jdongcoding.club/posts/webconfig/</guid>
+                <pubDate>Mon, 21 Nov 2022 09:27:27 &#43;0800</pubDate>
                 
                 <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
                 
-                    <description>&lt;h2 id=&#34;主题选取&#34;&gt;主题选取&lt;/h2&gt;
-&lt;h2 id=&#34;github-pages&#34;&gt;Github Pages&lt;/h2&gt;
+                    <description>&lt;h2 id=&#34;博客主题&#34;&gt;博客主题&lt;/h2&gt;
+&lt;p&gt;博客由 &lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo&lt;/a&gt; 驱动，主题是 &lt;a href=&#34;https://github.com/reuixiy/hugo-theme-meme&#34;&gt;MemE&lt;/a&gt;。&lt;/p&gt;
 &lt;h2 id=&#34;搜索设置&#34;&gt;搜索设置&lt;/h2&gt;
+&lt;p&gt;搜索采用&lt;a href=&#34;https://www.algolia.com/&#34;&gt;Algolia&lt;/a&gt;搜索引擎，采用&lt;a href=&#34;https://docs.github.com/en/actions/using-workflows&#34;&gt;github workflow&lt;/a&gt;进行自动同步，
+同步工具为开源&lt;a href=&#34;https://github.com/iChochy/Algolia-Upload-Records&#34;&gt;github action&lt;/a&gt;工具。&lt;/p&gt;
+&lt;h2 id=&#34;发布至github主页&#34;&gt;发布至github主页&lt;/h2&gt;
+&lt;p&gt;采用&lt;a href=&#34;https://git-scm.com/&#34;&gt;git&lt;/a&gt;工具上传至个人主页 &lt;strong&gt;username.github.io&lt;/strong&gt;，其中选择展示文件夹为 &lt;strong&gt;/docs&lt;/strong&gt;。&lt;/p&gt;
 &lt;h2 id=&#34;同步到自有域名&#34;&gt;同步到自有域名&lt;/h2&gt;
+&lt;p&gt;由于国内访问github过慢，因此将博客同步到个人的国内域名下，通过&lt;a href=&#34;https://nginx.org/&#34;&gt;nginx&lt;/a&gt;配置，将所有的访问重定向到 &lt;em&gt;https&lt;/em&gt;。&lt;/p&gt;
 </description>
                 
                 

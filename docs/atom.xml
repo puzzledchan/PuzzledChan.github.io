@@ -4,32 +4,37 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
     <title type="text">东风小站</title>
     <subtitle type="html">MemE 是一个强大且可高度定制的 GoHugo 博客主题，专为个人博客设计。</subtitle>
-    <updated>2022-11-19T16:07:29&#43;08:00</updated>
-    <id>https://example.com/</id>
-    <link rel="alternate" type="text/html" href="https://example.com/" />
-    <link rel="self" type="application/atom&#43;xml" href="https://example.com/atom.xml" />
+    <updated>2022-11-21T09:46:01&#43;08:00</updated>
+    <id>https://www.jdongcoding.club/</id>
+    <link rel="alternate" type="text/html" href="https://www.jdongcoding.club/" />
+    <link rel="self" type="application/atom&#43;xml" href="https://www.jdongcoding.club/atom.xml" />
     <author>
             <name>JdongChen</name>
-            <uri>https://example.com/</uri>
+            <uri>https://www.jdongcoding.club/</uri>
             </author>
     <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights>
     <generator uri="https://gohugo.io/" version="0.105.0">Hugo</generator>
         <entry>
             <title type="text">网站配置</title>
-            <link rel="alternate" type="text/html" href="https://example.com/posts/configblog/" />
-            <id>https://example.com/posts/configblog/</id>
-            <updated>2022-11-19T16:04:21&#43;08:00</updated>
-            <published>2022-11-19T16:03:29&#43;08:00</published>
+            <link rel="alternate" type="text/html" href="https://www.jdongcoding.club/posts/webconfig/" />
+            <id>https://www.jdongcoding.club/posts/webconfig/</id>
+            <updated>2022-11-21T09:43:12&#43;08:00</updated>
+            <published>2022-11-21T09:27:27&#43;08:00</published>
             <author>
                     <name>JdongChen</name>
                     <uri>https://jdongcoding.club/</uri>
                     </author>
-            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">主题选取 Github Pages 搜索设置 同步到自有域名</summary>
+            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">博客主题 博客由 Hugo 驱动，主题是 MemE。 搜索设置 搜索采用Algolia搜索引擎，采用g……</summary>
             
-                <content type="html">&lt;h2 id=&#34;主题选取&#34;&gt;主题选取&lt;/h2&gt;
-&lt;h2 id=&#34;github-pages&#34;&gt;Github Pages&lt;/h2&gt;
+                <content type="html">&lt;h2 id=&#34;博客主题&#34;&gt;博客主题&lt;/h2&gt;
+&lt;p&gt;博客由 &lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo&lt;/a&gt; 驱动，主题是 &lt;a href=&#34;https://github.com/reuixiy/hugo-theme-meme&#34;&gt;MemE&lt;/a&gt;。&lt;/p&gt;
 &lt;h2 id=&#34;搜索设置&#34;&gt;搜索设置&lt;/h2&gt;
+&lt;p&gt;搜索采用&lt;a href=&#34;https://www.algolia.com/&#34;&gt;Algolia&lt;/a&gt;搜索引擎，采用&lt;a href=&#34;https://docs.github.com/en/actions/using-workflows&#34;&gt;github workflow&lt;/a&gt;进行自动同步，
+同步工具为开源&lt;a href=&#34;https://github.com/iChochy/Algolia-Upload-Records&#34;&gt;github action&lt;/a&gt;工具。&lt;/p&gt;
+&lt;h2 id=&#34;发布至github主页&#34;&gt;发布至github主页&lt;/h2&gt;
+&lt;p&gt;采用&lt;a href=&#34;https://git-scm.com/&#34;&gt;git&lt;/a&gt;工具上传至个人主页 &lt;strong&gt;username.github.io&lt;/strong&gt;，其中选择展示文件夹为 &lt;strong&gt;/docs&lt;/strong&gt;。&lt;/p&gt;
 &lt;h2 id=&#34;同步到自有域名&#34;&gt;同步到自有域名&lt;/h2&gt;
+&lt;p&gt;由于国内访问github过慢，因此将博客同步到个人的国内域名下，通过&lt;a href=&#34;https://nginx.org/&#34;&gt;nginx&lt;/a&gt;配置，将所有的访问重定向到 &lt;em&gt;https&lt;/em&gt;。&lt;/p&gt;
 </content>
             
             

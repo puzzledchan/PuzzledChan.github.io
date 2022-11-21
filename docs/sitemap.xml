@@ -2,20 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://example.com/posts/</loc>
-    <lastmod>2022-11-19T16:04:21+08:00</lastmod>
+    <loc>https://www.jdongcoding.club/posts/</loc>
+    <lastmod>2022-11-21T09:43:12+08:00</lastmod>
   </url><url>
-    <loc>https://example.com/</loc>
-    <lastmod>2022-11-19T16:04:21+08:00</lastmod>
+    <loc>https://www.jdongcoding.club/</loc>
+    <lastmod>2022-11-21T09:43:12+08:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/configblog/</loc>
-    <lastmod>2022-11-19T16:04:21+08:00</lastmod>
+    <loc>https://www.jdongcoding.club/posts/webconfig/</loc>
+    <lastmod>2022-11-21T09:43:12+08:00</lastmod>
   </url><url>
-    <loc>https://example.com/about/</loc>
-    <lastmod>2022-11-19T15:57:09+08:00</lastmod>
+    <loc>https://www.jdongcoding.club/about/</loc>
+    <lastmod>2022-11-21T09:32:58+08:00</lastmod>
   </url><url>
-    <loc>https://example.com/categories/</loc>
+    <loc>https://www.jdongcoding.club/categories/</loc>
   </url><url>
-    <loc>https://example.com/tags/</loc>
+    <loc>https://www.jdongcoding.club/tags/</loc>
   </url>
 </urlset>

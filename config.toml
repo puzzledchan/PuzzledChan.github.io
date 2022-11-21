@@ -1,7 +1,7 @@
 ##########################################
 # 站点配置
 
-baseURL = "https://example.com/"
+baseURL = "https://www.jdongcoding.club/"
 title = "东风小站"
 languageCode = "zh-CN"
 hasCJKLanguage = true
@@ -881,7 +881,7 @@ uglyURLs = false
     enableImageHost = false
 
     # 图片外链地址
-    imageHostURL = "https://example.com/"
+    imageHostURL = "https://www.jdongcoding.club/"
 
     # 是否将 HTML 的头部元数据中的图片链接也替换为外链
     headAlso = false
@@ -902,7 +902,7 @@ uglyURLs = false
     enableVideoHost = false
 
     # 视频外链地址
-    videoHostURL = "https://example.com/"
+    videoHostURL = "https://www.jdongcoding.club/"
 
 
     ######################################

@@ -20,4 +20,4 @@ slug: ""
 3. 页面布局，欣赏的人自然懂。
 
 
-博客[使用 GitHub Issues 持续写作](/tech/continuous-writing-with-github-issues/)，博客由 [Hugo](https://gohugo.io/) 驱动，主题是 [MemE](https://github.com/reuixiy/hugo-theme-meme)。
+博客由 [Hugo](https://gohugo.io/) 驱动，主题是 [MemE](https://github.com/reuixiy/hugo-theme-meme)。
