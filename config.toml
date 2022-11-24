@@ -47,11 +47,13 @@ uglyURLs = false
 # URL 结构
 [permalinks]
     categories = "/categories/:slug/"
+    series = "/series/:slug/"
     tags = "/tags/:slug/"
 
 # 类别
 [taxonomies]
     category = "categories"
+    series = "series"
     tag = "tags"
 
 # 修改时间
@@ -198,31 +200,37 @@ uglyURLs = false
         pre = "internal"
         post = "archive"
     [[menu.main]]
+        pageref = "/series/"
+        name = "系列"
+        weight = 3
+        pre = "internal"
+        post = "wpexplorer"
+    [[menu.main]]
         pageref = "/categories/"
         name = "分类"
-        weight = 3
+        weight = 4
         pre = "internal"
         post = "th"
     [[menu.main]]
         pageref = "/tags/"
         name = "标签"
-        weight = 4
+        weight = 5
         pre = "internal"
         post = "tags"
     [[menu.main]]
         pageref = "/about/"
         name = "关于"
-        weight = 5
+        weight = 6
         pre = "internal"
         post = "user-circle"
     [[menu.main]]
-        weight = 6
+        weight = 7
         identifier = "theme-switcher"
     [[menu.main]]
-        weight = 7
+        weight = 8
         identifier = "lang-switcher"
     [[menu.main]]
-        weight = 8
+        weight = 9
         identifier = "search"
         post = "search"
 
