@@ -1,7 +1,7 @@
 ##########################################
 # 站点配置
 
-baseURL = "https://www.jdongcoding.club/"
+baseURL = "https://jdongchen.github.io/"
 title = "东风小站"
 languageCode = "zh-CN"
 hasCJKLanguage = true
@@ -104,7 +104,7 @@ uglyURLs = false
     # 头像
     avatar = "/icons/apple-touch-icon.png"
     # 网站（默认值：baseURL）
-    website = "https://jdongcoding.club/"
+    website = "https://jdongchen.github.io/"
 
 # 相关文章
 [related]
@@ -906,7 +906,7 @@ uglyURLs = false
     enableImageHost = false
 
     # 图片外链地址
-    imageHostURL = "https://www.jdongcoding.club/"
+    imageHostURL = ""
 
     # 是否将 HTML 的头部元数据中的图片链接也替换为外链
     headAlso = false
@@ -927,7 +927,7 @@ uglyURLs = false
     enableVideoHost = false
 
     # 视频外链地址
-    videoHostURL = "https://www.jdongcoding.club/"
+    videoHostURL = ""
 
 
     ######################################

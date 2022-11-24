@@ -2,103 +2,109 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://www.jdongcoding.club/categories/</loc>
-    <lastmod>2022-11-24T13:44:57+08:00</lastmod>
+    <loc>https://jdongchen.github.io/categories/</loc>
+    <lastmod>2022-11-24T21:27:08+08:00</lastmod>
   </url><url>
-    <loc>https://www.jdongcoding.club/series/lambda-%E6%BC%94%E7%AE%97/</loc>
-    <lastmod>2022-11-24T13:44:57+08:00</lastmod>
+    <loc>https://jdongchen.github.io/posts/</loc>
+    <lastmod>2022-11-24T21:27:08+08:00</lastmod>
   </url><url>
-    <loc>https://www.jdongcoding.club/tags/lambda%E6%BC%94%E7%AE%97/</loc>
-    <lastmod>2022-11-24T13:44:57+08:00</lastmod>
+    <loc>https://jdongchen.github.io/tags/python/</loc>
+    <lastmod>2022-11-24T21:27:08+08:00</lastmod>
   </url><url>
-    <loc>https://www.jdongcoding.club/posts/</loc>
-    <lastmod>2022-11-24T13:44:57+08:00</lastmod>
+    <loc>https://jdongchen.github.io/posts/configuration/pythondevelop/</loc>
+    <lastmod>2022-11-24T21:27:08+08:00</lastmod>
   </url><url>
-    <loc>https://www.jdongcoding.club/series/</loc>
-    <lastmod>2022-11-24T13:44:57+08:00</lastmod>
+    <loc>https://jdongchen.github.io/tags/</loc>
+    <lastmod>2022-11-24T21:27:08+08:00</lastmod>
   </url><url>
-    <loc>https://www.jdongcoding.club/tags/</loc>
-    <lastmod>2022-11-24T13:44:57+08:00</lastmod>
+    <loc>https://jdongchen.github.io/</loc>
+    <lastmod>2022-11-24T21:27:08+08:00</lastmod>
   </url><url>
-    <loc>https://www.jdongcoding.club/posts/computerscience/combinatordeduce/</loc>
-    <lastmod>2022-11-24T13:37:49+08:00</lastmod>
+    <loc>https://jdongchen.github.io/categories/%E9%85%8D%E7%BD%AE/</loc>
+    <lastmod>2022-11-24T21:27:08+08:00</lastmod>
   </url><url>
-    <loc>https://www.jdongcoding.club/</loc>
-    <lastmod>2022-11-24T13:44:57+08:00</lastmod>
+    <loc>https://jdongchen.github.io/posts/programminglanguage/pythonexception/</loc>
+    <lastmod>2022-11-24T20:33:56+08:00</lastmod>
   </url><url>
-    <loc>https://www.jdongcoding.club/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/</loc>
-    <lastmod>2022-11-24T13:44:57+08:00</lastmod>
+    <loc>https://jdongchen.github.io/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/</loc>
+    <lastmod>2022-11-24T20:33:56+08:00</lastmod>
   </url><url>
-    <loc>https://www.jdongcoding.club/posts/computerscience/lambdacalculuscombinator/</loc>
-    <lastmod>2022-11-24T13:44:21+08:00</lastmod>
+    <loc>https://jdongchen.github.io/posts/programminglanguage/pythoninternaltyping/</loc>
+    <lastmod>2022-11-24T19:55:42+08:00</lastmod>
   </url><url>
-    <loc>https://www.jdongcoding.club/posts/computerscience/lambdacalculussystem/</loc>
-    <lastmod>2022-11-24T13:44:57+08:00</lastmod>
+    <loc>https://jdongchen.github.io/series/lambda-%E6%BC%94%E7%AE%97/</loc>
+    <lastmod>2022-11-24T15:00:51+08:00</lastmod>
   </url><url>
-    <loc>https://www.jdongcoding.club/posts/computerscience/basiclambdacalculus/</loc>
-    <lastmod>2022-11-24T13:43:03+08:00</lastmod>
+    <loc>https://jdongchen.github.io/tags/lambda%E6%BC%94%E7%AE%97/</loc>
+    <lastmod>2022-11-24T15:00:51+08:00</lastmod>
   </url><url>
-    <loc>https://www.jdongcoding.club/tags/life/</loc>
+    <loc>https://jdongchen.github.io/series/</loc>
+    <lastmod>2022-11-24T15:00:51+08:00</lastmod>
+  </url><url>
+    <loc>https://jdongchen.github.io/posts/computerscience/combinatordeduce/</loc>
+    <lastmod>2022-11-24T15:00:51+08:00</lastmod>
+  </url><url>
+    <loc>https://jdongchen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/</loc>
+    <lastmod>2022-11-24T15:00:51+08:00</lastmod>
+  </url><url>
+    <loc>https://jdongchen.github.io/posts/computerscience/lambdacalculuscombinator/</loc>
+    <lastmod>2022-11-24T15:00:51+08:00</lastmod>
+  </url><url>
+    <loc>https://jdongchen.github.io/posts/computerscience/lambdacalculussystem/</loc>
+    <lastmod>2022-11-24T15:00:51+08:00</lastmod>
+  </url><url>
+    <loc>https://jdongchen.github.io/posts/computerscience/basiclambdacalculus/</loc>
+    <lastmod>2022-11-24T15:00:51+08:00</lastmod>
+  </url><url>
+    <loc>https://jdongchen.github.io/tags/life/</loc>
     <lastmod>2022-11-22T16:01:01+08:00</lastmod>
   </url><url>
-    <loc>https://www.jdongcoding.club/posts/essay/fallrecruitment/</loc>
+    <loc>https://jdongchen.github.io/posts/essay/fallrecruitment/</loc>
     <lastmod>2022-11-22T16:01:01+08:00</lastmod>
   </url><url>
-    <loc>https://www.jdongcoding.club/categories/%E9%9A%8F%E7%AC%94/</loc>
+    <loc>https://jdongchen.github.io/categories/%E9%9A%8F%E7%AC%94/</loc>
     <lastmod>2022-11-22T16:01:01+08:00</lastmod>
   </url><url>
-    <loc>https://www.jdongcoding.club/tags/vim/</loc>
+    <loc>https://jdongchen.github.io/tags/vim/</loc>
     <lastmod>2022-11-22T11:54:38+08:00</lastmod>
   </url><url>
-    <loc>https://www.jdongcoding.club/posts/computerskills/vimregister/</loc>
+    <loc>https://jdongchen.github.io/posts/computerskills/vimregister/</loc>
     <lastmod>2022-11-22T11:54:38+08:00</lastmod>
   </url><url>
-    <loc>https://www.jdongcoding.club/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%B7%A5%E7%A8%8B%E6%8A%80%E6%9C%AF/</loc>
+    <loc>https://jdongchen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%B7%A5%E7%A8%8B%E6%8A%80%E6%9C%AF/</loc>
     <lastmod>2022-11-22T11:54:38+08:00</lastmod>
   </url><url>
-    <loc>https://www.jdongcoding.club/posts/computerskills/basicvim/</loc>
+    <loc>https://jdongchen.github.io/posts/computerskills/basicvim/</loc>
     <lastmod>2022-11-22T11:54:38+08:00</lastmod>
   </url><url>
-    <loc>https://www.jdongcoding.club/tags/git/</loc>
+    <loc>https://jdongchen.github.io/tags/git/</loc>
     <lastmod>2022-11-22T11:54:38+08:00</lastmod>
   </url><url>
-    <loc>https://www.jdongcoding.club/posts/computerskills/basicgit/</loc>
+    <loc>https://jdongchen.github.io/posts/computerskills/basicgit/</loc>
     <lastmod>2022-11-22T11:54:38+08:00</lastmod>
   </url><url>
-    <loc>https://www.jdongcoding.club/tags/linux/</loc>
+    <loc>https://jdongchen.github.io/tags/linux/</loc>
     <lastmod>2022-11-21T22:04:03+08:00</lastmod>
   </url><url>
-    <loc>https://www.jdongcoding.club/posts/configuration/wsl/</loc>
+    <loc>https://jdongchen.github.io/posts/configuration/wsl/</loc>
     <lastmod>2022-11-21T22:04:03+08:00</lastmod>
   </url><url>
-    <loc>https://www.jdongcoding.club/categories/%E9%85%8D%E7%BD%AE/</loc>
+    <loc>https://jdongchen.github.io/posts/optimization/qpopt/</loc>
     <lastmod>2022-11-21T22:04:03+08:00</lastmod>
   </url><url>
-    <loc>https://www.jdongcoding.club/tags/python/</loc>
+    <loc>https://jdongchen.github.io/categories/%E4%BC%98%E5%8C%96/</loc>
     <lastmod>2022-11-21T22:04:03+08:00</lastmod>
   </url><url>
-    <loc>https://www.jdongcoding.club/posts/configuration/anaconda/</loc>
+    <loc>https://jdongchen.github.io/posts/programminglanguage/pythonsyntax/</loc>
     <lastmod>2022-11-21T22:04:03+08:00</lastmod>
   </url><url>
-    <loc>https://www.jdongcoding.club/posts/optimization/qpopt/</loc>
-    <lastmod>2022-11-21T22:04:03+08:00</lastmod>
+    <loc>https://jdongchen.github.io/tags/blog/</loc>
+    <lastmod>2022-11-21T16:48:22+08:00</lastmod>
   </url><url>
-    <loc>https://www.jdongcoding.club/categories/%E4%BC%98%E5%8C%96/</loc>
-    <lastmod>2022-11-21T22:04:03+08:00</lastmod>
+    <loc>https://jdongchen.github.io/posts/configuration/webconfig/</loc>
+    <lastmod>2022-11-21T16:48:22+08:00</lastmod>
   </url><url>
-    <loc>https://www.jdongcoding.club/posts/programminglanguage/pythonsyntax/</loc>
-    <lastmod>2022-11-21T22:04:03+08:00</lastmod>
-  </url><url>
-    <loc>https://www.jdongcoding.club/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/</loc>
-    <lastmod>2022-11-21T22:04:03+08:00</lastmod>
-  </url><url>
-    <loc>https://www.jdongcoding.club/tags/blog/</loc>
-    <lastmod>2022-11-21T22:04:03+08:00</lastmod>
-  </url><url>
-    <loc>https://www.jdongcoding.club/posts/webconfig/</loc>
-    <lastmod>2022-11-21T22:04:03+08:00</lastmod>
-  </url><url>
-    <loc>https://www.jdongcoding.club/about/</loc>
+    <loc>https://jdongchen.github.io/about/</loc>
     <lastmod>2022-11-21T09:49:30+08:00</lastmod>
   </url>
 </urlset>
