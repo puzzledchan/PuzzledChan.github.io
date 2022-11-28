@@ -1,7 +1,7 @@
 ##########################################
 # 站点配置
 
-baseURL = "https://jdongchen.github.io/"
+baseURL = "https://puzzledchan.github.io/"
 title = "东风小站"
 languageCode = "zh-CN"
 hasCJKLanguage = true
@@ -104,7 +104,7 @@ uglyURLs = false
     # 头像
     avatar = "/icons/apple-touch-icon.png"
     # 网站（默认值：baseURL）
-    website = "https://jdongchen.github.io/"
+    website = "https://puzzledchan.github.io/"
 
 # 相关文章
 [related]
@@ -1120,7 +1120,7 @@ uglyURLs = false
     #      的优先级高于此处
 
     # 仓库地址
-    repoURL = "https://github.com/JdongChen/JdongChen.github.io"
+    repoURL = "https://github.com/puzzledchan/puzzledchan.github.io"
     # 编辑地址
     repoEditURL = ""
 

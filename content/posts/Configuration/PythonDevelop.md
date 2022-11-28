@@ -1,5 +1,5 @@
 ---
-title: "Python 开发"
+title: "Python 开发配置"
 date: 2022-11-24T21:21:13+08:00
 draft: false
 toc: true
@@ -57,7 +57,7 @@ slug: ""
    ```
    * 创建虚拟环境
    ``` sh
-   conda create -n env_name python = version
+   conda create -n env_name python = version # 3.8
    ```
    * 删除虚拟环境
    ``` sh
@@ -71,3 +71,15 @@ slug: ""
    ``` sh
    conda deactivate
    ```
+- 配置软件源
+  * 查看与使用
+  ``` sh
+  conda install -c channel_name package_name # -c 等价于 -channel 选择下载源+包
+  conda config --show channels # 显示所有的包
+  ``` 
+  * 添加清华源
+  ``` sh
+  conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+  conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+  conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
+  ```

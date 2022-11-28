@@ -8,7 +8,7 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>东风小站</title>
-        <link>https://jdongchen.github.io/</link>
+        <link>https://puzzledchan.github.io/</link>
         <description>MemE 是一个强大且可高度定制的 GoHugo 博客主题，专为个人博客设计。</description>
         <generator>Hugo 0.106.0 https://gohugo.io/</generator>
         
@@ -19,15 +19,309 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
         
-        <lastBuildDate>Thu, 24 Nov 2022 21:32:24 &#43;0800</lastBuildDate>
+        <lastBuildDate>Mon, 28 Nov 2022 19:03:52 &#43;0800</lastBuildDate>
         
-            <atom:link rel="self" type="application/rss&#43;xml" href="https://jdongchen.github.io/rss.xml" />
+            <atom:link rel="self" type="application/rss&#43;xml" href="https://puzzledchan.github.io/rss.xml" />
         
         
             <item>
-                <title>Python 开发</title>
-                <link>https://jdongchen.github.io/posts/configuration/pythondevelop/</link>
-                <guid isPermaLink="true">https://jdongchen.github.io/posts/configuration/pythondevelop/</guid>
+                <title>Python 生成器、迭代器与可迭代对象</title>
+                <link>https://puzzledchan.github.io/posts/programminglanguage/pythonitergenerator/</link>
+                <guid isPermaLink="true">https://puzzledchan.github.io/posts/programminglanguage/pythonitergenerator/</guid>
+                <pubDate>Fri, 25 Nov 2022 15:40:46 &#43;0800</pubDate>
+                
+                <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
+                
+                    <description>&lt;h2 id=&#34;生成器迭代器与可迭代对象的关系&#34;&gt;生成器、迭代器与可迭代对象的关系&lt;/h2&gt;
+&lt;p&gt;在Python中对象是否可迭代是一个十分重要的特性。如何判断一个对象是否是可迭代的，什是迭代器，以及什么是又生成器？
+$$
+生成器 \subset 迭代器 \subset 可迭代对象
+$$&lt;/p&gt;
+&lt;h2 id=&#34;可迭代对象&#34;&gt;可迭代对象&lt;/h2&gt;
+&lt;p&gt;一个实现了&lt;code&gt;__iter__()&lt;/code&gt;方法的对象就是可迭代对象。通俗的讲指可以用for循环遍历的对象均为可迭代对象。判断一个对象是不是可迭代，有两种方法：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;通过&lt;code&gt;dir&lt;/code&gt;获取某个对象所有的属性和方法，只要这个对象实现了&lt;code&gt;__iter__&lt;/code&gt;方法，那么它就是可迭代对象。&lt;/li&gt;
+&lt;li&gt;通过&lt;code&gt;isinstance()&lt;/code&gt;函数，判断一个对象是否是&lt;code&gt;iterable&lt;/code&gt;类型。
+验证可迭代对象：&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kn&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;collections&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Iterable&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;MyIter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;fm&#34;&gt;__iter__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;pass&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;my_iter&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;MyIter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;isinstance&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;my_iter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Iterable&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 输出 True&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;my_iter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;pass&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 输出 TypeError: iter() returned non-iterator of type &amp;#39;NoneType&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;上述代码证明不是所有的..可迭代对象..都可以被for循环遍历，前提是必须正确的实现&lt;code&gt;__iter__()&lt;/code&gt;方法，让可迭代对象返回一个迭代器。&lt;/p&gt;
+&lt;h2 id=&#34;迭代器iterator&#34;&gt;迭代器(Iterator)&lt;/h2&gt;
+&lt;p&gt;官方定义如下：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;1.迭代器是一个对象，该对象代表了一个数据流。
+2.重复调用迭代器的__next__方法(或将迭代器对象当作参数传入內置函数next()中)将依次返回数据流中的元素。
+3.当数据流中无可返回元素时，则抛出StopIteration异常。
+4.迭代器必须拥有__iter__方法，该方法返回迭代器对象自身。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;以列表&lt;code&gt;list&lt;/code&gt;为例：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# for循环遍历list的代码如下：&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;my_list&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;my_list&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 输出 1， 2， 3&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;验证&lt;code&gt;list&lt;/code&gt;是否未迭代器：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;my_list&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;next&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;my_list&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 输出 TypeError: &amp;#39;list&amp;#39; object is not an iterator&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;由此观之，&lt;code&gt;list&lt;/code&gt;并不是一个可迭代对象。那么为什么可以通过&lt;code&gt;for&lt;/code&gt;对&lt;code&gt;list&lt;/code&gt;遍历呢？
+因为在遍历时，&lt;code&gt;Python&lt;/code&gt;底层调用了&lt;code&gt;iter()&lt;/code&gt;方法，获取对应的迭代器；随后在迭代器上操作&lt;code&gt;next&lt;/code&gt;函数。
+因此，&lt;code&gt;for&lt;/code&gt;遍历&lt;code&gt;list&lt;/code&gt;等价于：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;my_iter&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;iter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;my_list&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;True&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;try&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;next&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;my_iter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;except&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;StopIteration&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;break&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;迭代器在Python中最明显的是用于减少内存，以文件对象为例：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;## 一次性加载&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;with&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;open&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;test.txt&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;as&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;data&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;readlines&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;line&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     &lt;span class=&#34;k&#34;&gt;pass&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;## 迭代器优化&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;with&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;open&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;test.txt&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;as&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;line&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;pass&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;因为文件对象&lt;code&gt;f&lt;/code&gt;是一个迭代器，所以可以对其使用循环遍历。而循环遍历时第一步就是调用&lt;code&gt;iter()&lt;/code&gt;函数获取到f到迭代器对象(此处f到迭代器对象就是自身)，接下来就是每次循环的时候调用&lt;code&gt;__next__()&lt;/code&gt;函数来获取下一行。所以利用迭代器可以很大程度的节省内存，只有在调用&lt;code&gt;next()&lt;/code&gt;方法时才会去获取下一个元素，这样可以避免一次性的加载很大的对象导致占用内存过多，而是在需要时才进行..惰性计算..。&lt;/p&gt;
+&lt;h2 id=&#34;生成器generator&#34;&gt;生成器(Generator)&lt;/h2&gt;
+&lt;p&gt;生成器是特殊的迭代器。生成器在每次调用&lt;code&gt;__next__&lt;/code&gt;方法生成一个元素，因此称之为生成器。
+生成器在Python中，较之于迭代器更轻量，更优雅，主要有两种形式：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;通过函数创建&lt;/li&gt;
+&lt;li&gt;通过推导式创建：&lt;code&gt;(i*2 for i in range(10))&lt;/code&gt;
+注：不同于列表生成器&lt;code&gt;[i*2 for i in range(10)]&lt;/code&gt;一次性计算，推导式的生成器是..惰性计算..。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;生成器对象是一种特殊的Iterator函数，它会在执行过程中保存执行的上下文环境，并在下次循环中从&lt;code&gt;yield&lt;/code&gt;语句后继续执行，生成器的标志就是&lt;code&gt;yield&lt;/code&gt;关键字。&lt;/p&gt;
+&lt;h2 id=&#34;示例斐波那契数列&#34;&gt;示例：斐波那契数列&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;传统方式：&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;fibonacci_fun&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;num&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;numlist&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;num&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;numlist&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;append&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;numlist&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;numlist&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;])&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;numlist&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;res&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;fibonacci_fun&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;100000&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;res&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;迭代器：&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Fibonacci_Iterator&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;fm&#34;&gt;__init__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;counts&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;start&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;end&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;counts&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;counts&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;fm&#34;&gt;__iter__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;fm&#34;&gt;__next__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;counts&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;k&#34;&gt;raise&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;StopIteration&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;start&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;end&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;end&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;start&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;end&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;start&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;          
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;f_iter&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Fibonacci_Iterator&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;100000&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;f_iter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;生成器&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;fibonacci_generator&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;counts&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;start&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;end&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;counts&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;start&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;end&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;end&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;end&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;start&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;yield&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;start&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;f_gene&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;fibonacci_generator&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;100000&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;f_gene&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;由上面实现可见&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;https://puzzledchan.github.io/posts/programminglanguage/pythonitergenerator/#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;传统方法求遍历解时需要一次性算出所有的元素，并将其保存在一个列表中返回；&lt;/li&gt;
+&lt;li&gt;迭代器求解遍历时只会在for循环每次隐式调用__next__()方法时才求解；&lt;/li&gt;
+&lt;li&gt;生成器的实现则最为优雅，代码执行到yield会暂停，把结果返回出来，再次隐式调用__next__()启动生成器的时候会在暂停的位置继续往下执行&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.zhihu.com/question/20829330/answer/2320711618&#34;&gt;如何更好地理解Python迭代器和生成器？&lt;/a&gt;&lt;a href=&#34;https://www.zhihu.com/question/20829330/answer/2320711618&#34;&gt;https://www.zhihu.com/question/20829330/answer/2320711618&lt;/a&gt;&amp;#160;&lt;a href=&#34;https://puzzledchan.github.io/posts/programminglanguage/pythonitergenerator/#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+                
+                
+                
+                
+                
+                    
+                        
+                            
+                                
+                                
+                                
+                                    <category domain="https://puzzledchan.github.io/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</category>
+                                
+                            
+                        
+                    
+                        
+                    
+                        
+                            
+                                
+                                
+                                
+                                    <category domain="https://puzzledchan.github.io/tags/python/">Python</category>
+                                
+                            
+                        
+                    
+                
+            </item>
+        
+            <item>
+                <title>Python 开发配置</title>
+                <link>https://puzzledchan.github.io/posts/configuration/pythondevelop/</link>
+                <guid isPermaLink="true">https://puzzledchan.github.io/posts/configuration/pythondevelop/</guid>
                 <pubDate>Thu, 24 Nov 2022 21:21:13 &#43;0800</pubDate>
                 
                 <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
@@ -138,7 +432,7 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;conda create -n env_name &lt;span class=&#34;nv&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; version
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;conda create -n env_name &lt;span class=&#34;nv&#34;&gt;python&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; version &lt;span class=&#34;c1&#34;&gt;# 3.8&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;ul&gt;
@@ -175,6 +469,36 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;配置软件源
+&lt;ul&gt;
+&lt;li&gt;查看与使用&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;conda install -c channel_name package_name &lt;span class=&#34;c1&#34;&gt;# -c 等价于 -channel 选择下载源+包&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;conda config --show channels &lt;span class=&#34;c1&#34;&gt;# 显示所有的包&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;添加清华源&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
                 
@@ -188,7 +512,7 @@
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/categories/%E9%85%8D%E7%BD%AE/">配置</category>
+                                    <category domain="https://puzzledchan.github.io/categories/%E9%85%8D%E7%BD%AE/">配置</category>
                                 
                             
                         
@@ -200,7 +524,7 @@
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/tags/python/">Python</category>
+                                    <category domain="https://puzzledchan.github.io/tags/python/">Python</category>
                                 
                             
                         
@@ -210,8 +534,8 @@
         
             <item>
                 <title>Python 异常处理 与 with 语句</title>
-                <link>https://jdongchen.github.io/posts/programminglanguage/pythonexception/</link>
-                <guid isPermaLink="true">https://jdongchen.github.io/posts/programminglanguage/pythonexception/</guid>
+                <link>https://puzzledchan.github.io/posts/programminglanguage/pythonexception/</link>
+                <guid isPermaLink="true">https://puzzledchan.github.io/posts/programminglanguage/pythonexception/</guid>
                 <pubDate>Thu, 24 Nov 2022 20:12:56 &#43;0800</pubDate>
                 
                 <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
@@ -363,7 +687,7 @@
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</category>
+                                    <category domain="https://puzzledchan.github.io/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</category>
                                 
                             
                         
@@ -375,7 +699,7 @@
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/tags/python/">Python</category>
+                                    <category domain="https://puzzledchan.github.io/tags/python/">Python</category>
                                 
                             
                         
@@ -385,8 +709,8 @@
         
             <item>
                 <title>Python 内置类型</title>
-                <link>https://jdongchen.github.io/posts/programminglanguage/pythoninternaltyping/</link>
-                <guid isPermaLink="true">https://jdongchen.github.io/posts/programminglanguage/pythoninternaltyping/</guid>
+                <link>https://puzzledchan.github.io/posts/programminglanguage/pythoninternaltyping/</link>
+                <guid isPermaLink="true">https://puzzledchan.github.io/posts/programminglanguage/pythoninternaltyping/</guid>
                 <pubDate>Thu, 24 Nov 2022 19:44:24 &#43;0800</pubDate>
                 
                 <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
@@ -454,7 +778,7 @@
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</category>
+                                    <category domain="https://puzzledchan.github.io/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</category>
                                 
                             
                         
@@ -466,7 +790,7 @@
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/tags/python/">Python</category>
+                                    <category domain="https://puzzledchan.github.io/tags/python/">Python</category>
                                 
                             
                         
@@ -476,15 +800,15 @@
         
             <item>
                 <title>λ 演算中组合子的启发式推导(四)</title>
-                <link>https://jdongchen.github.io/posts/computerscience/combinatordeduce/</link>
-                <guid isPermaLink="true">https://jdongchen.github.io/posts/computerscience/combinatordeduce/</guid>
+                <link>https://puzzledchan.github.io/posts/computerscience/combinatordeduce/</link>
+                <guid isPermaLink="true">https://puzzledchan.github.io/posts/computerscience/combinatordeduce/</guid>
                 <pubDate>Thu, 24 Nov 2022 12:26:06 &#43;0800</pubDate>
                 
                 <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
                 
                     <description>&lt;h2 id=&#34;lambda-演算组合子&#34;&gt;$\lambda$ 演算组合子&lt;/h2&gt;
 &lt;p&gt;λ 演算可以通过组合子进行各种复杂的逻辑运算与代数运算，包括重复、递归等等。然而组合子的推导
-过于复杂，因此参考了一些启发式推导的方法&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;https://jdongchen.github.io/posts/computerscience/combinatordeduce/#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
+过于复杂，因此参考了一些启发式推导的方法&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;https://puzzledchan.github.io/posts/computerscience/combinatordeduce/#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
 &lt;h2 id=&#34;y-组合子启发式推导&#34;&gt;Y 组合子启发式推导&lt;/h2&gt;
 &lt;p&gt;递归函数的基本形式：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -625,7 +949,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;Y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;f&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)))(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;f&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)))&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;然而在&lt;code&gt;JavaScript&lt;/code&gt;无法直接使用，会报堆栈溢出的错误，因为&lt;code&gt;JavaScript&lt;/code&gt;采用&lt;code&gt;Call By Value&lt;/code&gt;的调用约定，参数传入前会先计算值；因此考虑采用形式为$\lambda f.(\lambda x.f (\lambda y. (x x) y)) (\lambda x. f (\lambda y. (x x) y))$的 Z 组合子，具体如下&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;https://jdongchen.github.io/posts/computerscience/combinatordeduce/#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;：&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;然而在&lt;code&gt;JavaScript&lt;/code&gt;无法直接使用，会报堆栈溢出的错误，因为&lt;code&gt;JavaScript&lt;/code&gt;采用&lt;code&gt;Call By Value&lt;/code&gt;的调用约定，参数传入前会先计算值；因此考虑采用形式为$\lambda f.(\lambda x.f (\lambda y. (x x) y)) (\lambda x. f (\lambda y. (x x) y))$的 Z 组合子，具体如下&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;https://puzzledchan.github.io/posts/computerscience/combinatordeduce/#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -653,10 +977,10 @@
 &lt;hr&gt;
 &lt;ol&gt;
 &lt;li id=&#34;fn:1&#34;&gt;
-&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/547191928&#34;&gt;Y组合子的一个启发式推导&lt;/a&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/547191928&#34;&gt;https://zhuanlan.zhihu.com/p/547191928&lt;/a&gt;&amp;#160;&lt;a href=&#34;https://jdongchen.github.io/posts/computerscience/combinatordeduce/#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/547191928&#34;&gt;Y组合子的一个启发式推导&lt;/a&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/547191928&#34;&gt;https://zhuanlan.zhihu.com/p/547191928&lt;/a&gt;&amp;#160;&lt;a href=&#34;https://puzzledchan.github.io/posts/computerscience/combinatordeduce/#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li id=&#34;fn:2&#34;&gt;
-&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/51856257&#34;&gt;十分钟速通 Y Combinator&lt;/a&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/51856257&#34;&gt;https://zhuanlan.zhihu.com/p/51856257&lt;/a&gt;&amp;#160;&lt;a href=&#34;https://jdongchen.github.io/posts/computerscience/combinatordeduce/#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/51856257&#34;&gt;十分钟速通 Y Combinator&lt;/a&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/51856257&#34;&gt;https://zhuanlan.zhihu.com/p/51856257&lt;/a&gt;&amp;#160;&lt;a href=&#34;https://puzzledchan.github.io/posts/computerscience/combinatordeduce/#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
@@ -672,7 +996,7 @@
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">计算机科学</category>
+                                    <category domain="https://puzzledchan.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">计算机科学</category>
                                 
                             
                         
@@ -682,7 +1006,7 @@
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/series/lambda-%E6%BC%94%E7%AE%97/">lambda 演算</category>
+                                    <category domain="https://puzzledchan.github.io/series/lambda-%E6%BC%94%E7%AE%97/">lambda 演算</category>
                                 
                             
                         
@@ -692,7 +1016,7 @@
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/tags/lambda%E6%BC%94%E7%AE%97/">lambda演算</category>
+                                    <category domain="https://puzzledchan.github.io/tags/lambda%E6%BC%94%E7%AE%97/">lambda演算</category>
                                 
                             
                         
@@ -702,8 +1026,8 @@
         
             <item>
                 <title>λ 演算的组合子(三)</title>
-                <link>https://jdongchen.github.io/posts/computerscience/lambdacalculuscombinator/</link>
-                <guid isPermaLink="true">https://jdongchen.github.io/posts/computerscience/lambdacalculuscombinator/</guid>
+                <link>https://puzzledchan.github.io/posts/computerscience/lambdacalculuscombinator/</link>
+                <guid isPermaLink="true">https://puzzledchan.github.io/posts/computerscience/lambdacalculuscombinator/</guid>
                 <pubDate>Wed, 23 Nov 2022 21:14:23 &#43;0800</pubDate>
                 
                 <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
@@ -720,7 +1044,7 @@
 &lt;li&gt;给出递归终止时的处理方法；&lt;/li&gt;
 &lt;li&gt;提取重复的逻辑，缩小问题的规模。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;尾递归&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;https://jdongchen.github.io/posts/computerscience/lambdacalculuscombinator/#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;：&lt;/p&gt;
+&lt;p&gt;尾递归&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;https://puzzledchan.github.io/posts/computerscience/lambdacalculuscombinator/#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;如果一个函数中所有递归形式的调用都出现在函数的末尾，我们称这个递归函数是尾递归的。即递归调用后返回的结果直接返回。
 传统递归若递归链过长会导致运行效率低，甚至栈溢出。尾递归优化了传统递归的栈内存的问题。&lt;/p&gt;
@@ -753,8 +1077,8 @@
 &lt;p&gt;答案是通过 $Y$ 组合子：&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;let Y = lambda y . (lambda x . y (x x)) (lambda x . y (x x))
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;$Y$ 组合子的形状像一个&lt;code&gt;Y&lt;/code&gt;，如下图所示：
-&lt;img src=&#34;https://jdongchen.github.io/images/ComputerScience/combinators.jpg&#34; alt=&#34;组合子&#34;&gt;
-若用&lt;code&gt;javascript&lt;/code&gt;表示&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;https://jdongchen.github.io/posts/computerscience/lambdacalculuscombinator/#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;：&lt;/p&gt;
+&lt;img src=&#34;https://puzzledchan.github.io/images/ComputerScience/combinators.jpg&#34; alt=&#34;组合子&#34;&gt;
+若用&lt;code&gt;javascript&lt;/code&gt;表示&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;https://puzzledchan.github.io/posts/computerscience/lambdacalculuscombinator/#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -833,10 +1157,10 @@ G的定义中不会出现factorial，但是它可以接受factorial作为参数�
 &lt;hr&gt;
 &lt;ol&gt;
 &lt;li id=&#34;fn:1&#34;&gt;
-&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/523100559&#34;&gt;高阶函数、柯里化、回调函数、递归&lt;/a&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/523100559&#34;&gt;https://zhuanlan.zhihu.com/p/523100559&lt;/a&gt;&amp;#160;&lt;a href=&#34;https://jdongchen.github.io/posts/computerscience/lambdacalculuscombinator/#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/523100559&#34;&gt;高阶函数、柯里化、回调函数、递归&lt;/a&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/523100559&#34;&gt;https://zhuanlan.zhihu.com/p/523100559&lt;/a&gt;&amp;#160;&lt;a href=&#34;https://puzzledchan.github.io/posts/computerscience/lambdacalculuscombinator/#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li id=&#34;fn:2&#34;&gt;
-&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/447398364&#34;&gt;Lambda 演算基础&lt;/a&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/447398364&#34;&gt;https://zhuanlan.zhihu.com/p/447398364&lt;/a&gt;&amp;#160;&lt;a href=&#34;https://jdongchen.github.io/posts/computerscience/lambdacalculuscombinator/#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/447398364&#34;&gt;Lambda 演算基础&lt;/a&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/447398364&#34;&gt;https://zhuanlan.zhihu.com/p/447398364&lt;/a&gt;&amp;#160;&lt;a href=&#34;https://puzzledchan.github.io/posts/computerscience/lambdacalculuscombinator/#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
@@ -852,7 +1176,7 @@ G的定义中不会出现factorial，但是它可以接受factorial作为参数�
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">计算机科学</category>
+                                    <category domain="https://puzzledchan.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">计算机科学</category>
                                 
                             
                         
@@ -862,7 +1186,7 @@ G的定义中不会出现factorial，但是它可以接受factorial作为参数�
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/series/lambda-%E6%BC%94%E7%AE%97/">lambda 演算</category>
+                                    <category domain="https://puzzledchan.github.io/series/lambda-%E6%BC%94%E7%AE%97/">lambda 演算</category>
                                 
                             
                         
@@ -872,7 +1196,7 @@ G的定义中不会出现factorial，但是它可以接受factorial作为参数�
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/tags/lambda%E6%BC%94%E7%AE%97/">lambda演算</category>
+                                    <category domain="https://puzzledchan.github.io/tags/lambda%E6%BC%94%E7%AE%97/">lambda演算</category>
                                 
                             
                         
@@ -882,8 +1206,8 @@ G的定义中不会出现factorial，但是它可以接受factorial作为参数�
         
             <item>
                 <title>λ 演算构建基本的系统(二)</title>
-                <link>https://jdongchen.github.io/posts/computerscience/lambdacalculussystem/</link>
-                <guid isPermaLink="true">https://jdongchen.github.io/posts/computerscience/lambdacalculussystem/</guid>
+                <link>https://puzzledchan.github.io/posts/computerscience/lambdacalculussystem/</link>
+                <guid isPermaLink="true">https://puzzledchan.github.io/posts/computerscience/lambdacalculussystem/</guid>
                 <pubDate>Wed, 23 Nov 2022 16:19:13 &#43;0800</pubDate>
                 
                 <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
@@ -963,7 +1287,7 @@ $$&lt;/li&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;h2 id=&#34;lambda-演算中的布尔值与选择&#34;&gt;$\lambda$ 演算中的布尔值与选择&lt;/h2&gt;
-&lt;p&gt;在编程语句中，表达式&lt;code&gt;if/then/else&lt;/code&gt;必不可少。因此，除了将数字表示为函数外，构造&lt;code&gt;TRUE&lt;/code&gt;和&lt;code&gt;FALSE&lt;/code&gt;的$\lambda$表达式也极为重要&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;https://jdongchen.github.io/posts/computerscience/lambdacalculussystem/#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
+&lt;p&gt;在编程语句中，表达式&lt;code&gt;if/then/else&lt;/code&gt;必不可少。因此，除了将数字表示为函数外，构造&lt;code&gt;TRUE&lt;/code&gt;和&lt;code&gt;FALSE&lt;/code&gt;的$\lambda$表达式也极为重要&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;https://puzzledchan.github.io/posts/computerscience/lambdacalculussystem/#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -1060,7 +1384,7 @@ $$&lt;/li&gt;
 &lt;hr&gt;
 &lt;ol&gt;
 &lt;li id=&#34;fn:1&#34;&gt;
-&lt;p&gt;&lt;a href=&#34;https://cgnail.github.io/academic/&#34;&gt;Lambda 演算&lt;/a&gt;&lt;a href=&#34;https://cgnail.github.io/academic/&#34;&gt;https://cgnail.github.io/academic/&lt;/a&gt;&amp;#160;&lt;a href=&#34;https://jdongchen.github.io/posts/computerscience/lambdacalculussystem/#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://cgnail.github.io/academic/&#34;&gt;Lambda 演算&lt;/a&gt;&lt;a href=&#34;https://cgnail.github.io/academic/&#34;&gt;https://cgnail.github.io/academic/&lt;/a&gt;&amp;#160;&lt;a href=&#34;https://puzzledchan.github.io/posts/computerscience/lambdacalculussystem/#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
@@ -1076,7 +1400,7 @@ $$&lt;/li&gt;
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">计算机科学</category>
+                                    <category domain="https://puzzledchan.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">计算机科学</category>
                                 
                             
                         
@@ -1086,7 +1410,7 @@ $$&lt;/li&gt;
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/series/lambda-%E6%BC%94%E7%AE%97/">lambda 演算</category>
+                                    <category domain="https://puzzledchan.github.io/series/lambda-%E6%BC%94%E7%AE%97/">lambda 演算</category>
                                 
                             
                         
@@ -1096,7 +1420,7 @@ $$&lt;/li&gt;
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/tags/lambda%E6%BC%94%E7%AE%97/">lambda演算</category>
+                                    <category domain="https://puzzledchan.github.io/tags/lambda%E6%BC%94%E7%AE%97/">lambda演算</category>
                                 
                             
                         
@@ -1106,14 +1430,14 @@ $$&lt;/li&gt;
         
             <item>
                 <title>λ 演算的基本规则(一)</title>
-                <link>https://jdongchen.github.io/posts/computerscience/basiclambdacalculus/</link>
-                <guid isPermaLink="true">https://jdongchen.github.io/posts/computerscience/basiclambdacalculus/</guid>
+                <link>https://puzzledchan.github.io/posts/computerscience/basiclambdacalculus/</link>
+                <guid isPermaLink="true">https://puzzledchan.github.io/posts/computerscience/basiclambdacalculus/</guid>
                 <pubDate>Wed, 23 Nov 2022 15:01:07 &#43;0800</pubDate>
                 
                 <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
                 
                     <description>&lt;h2 id=&#34;lambda-演算介绍&#34;&gt;$\lambda$ 演算介绍&lt;/h2&gt;
-&lt;p&gt;λ 演算是一套从数学逻辑中发展，以变量绑定和替换的规则，来研究函数如何抽象化定义、函数如何被应用以及递归的..形式系统..。 它由数学家阿隆佐·邱奇在20世纪30年代首次发表。Lambda演算作为一种广泛用途的计算模型，可以清晰地定义可计算函数，而任何可计算函数都能以这种形式表达和求值，它能模拟单一磁带图灵机的计算过程；尽管如此，$\lambda$ 演算强调的是变换规则的运用，而非实现它们的具体机器。$\lambda$ 演算伟大的原因有很多&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;https://jdongchen.github.io/posts/computerscience/basiclambdacalculus/#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;，诸如：&lt;/p&gt;
+&lt;p&gt;λ 演算是一套从数学逻辑中发展，以变量绑定和替换的规则，来研究函数如何抽象化定义、函数如何被应用以及递归的..形式系统..。 它由数学家阿隆佐·邱奇在20世纪30年代首次发表。Lambda演算作为一种广泛用途的计算模型，可以清晰地定义可计算函数，而任何可计算函数都能以这种形式表达和求值，它能模拟单一磁带图灵机的计算过程；尽管如此，$\lambda$ 演算强调的是变换规则的运用，而非实现它们的具体机器。$\lambda$ 演算伟大的原因有很多&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;https://puzzledchan.github.io/posts/computerscience/basiclambdacalculus/#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;，诸如：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;简单；&lt;/li&gt;
 &lt;li&gt;图灵完备；&lt;/li&gt;
@@ -1142,7 +1466,7 @@ $$&lt;/li&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &amp;lt;expr&amp;gt; ::&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &amp;lt;expr&amp;gt; &amp;lt;expr&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;注意&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;https://jdongchen.github.io/posts/computerscience/basiclambdacalculus/#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;：&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;注意&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;https://puzzledchan.github.io/posts/computerscience/basiclambdacalculus/#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;加括号可以避免歧义；&lt;/li&gt;
 &lt;li&gt;未加括号时，函数应用的参数满足左结合；&lt;/li&gt;
@@ -1169,10 +1493,10 @@ $$&lt;/li&gt;
 &lt;hr&gt;
 &lt;ol&gt;
 &lt;li id=&#34;fn:1&#34;&gt;
-&lt;p&gt;&lt;a href=&#34;https://cgnail.github.io/academic/&#34;&gt;λ 演算&lt;/a&gt;&lt;a href=&#34;https://cgnail.github.io/academic/&#34;&gt;https://cgnail.github.io/academic/&lt;/a&gt;&amp;#160;&lt;a href=&#34;https://jdongchen.github.io/posts/computerscience/basiclambdacalculus/#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://cgnail.github.io/academic/&#34;&gt;λ 演算&lt;/a&gt;&lt;a href=&#34;https://cgnail.github.io/academic/&#34;&gt;https://cgnail.github.io/academic/&lt;/a&gt;&amp;#160;&lt;a href=&#34;https://puzzledchan.github.io/posts/computerscience/basiclambdacalculus/#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li id=&#34;fn:2&#34;&gt;
-&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/527572849&#34;&gt;函数构建抽象&lt;/a&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/527572849&#34;&gt;https://zhuanlan.zhihu.com/p/527572849&lt;/a&gt;&amp;#160;&lt;a href=&#34;https://jdongchen.github.io/posts/computerscience/basiclambdacalculus/#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/527572849&#34;&gt;函数构建抽象&lt;/a&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/527572849&#34;&gt;https://zhuanlan.zhihu.com/p/527572849&lt;/a&gt;&amp;#160;&lt;a href=&#34;https://puzzledchan.github.io/posts/computerscience/basiclambdacalculus/#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
@@ -1188,7 +1512,7 @@ $$&lt;/li&gt;
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">计算机科学</category>
+                                    <category domain="https://puzzledchan.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">计算机科学</category>
                                 
                             
                         
@@ -1198,7 +1522,7 @@ $$&lt;/li&gt;
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/series/lambda-%E6%BC%94%E7%AE%97/">lambda 演算</category>
+                                    <category domain="https://puzzledchan.github.io/series/lambda-%E6%BC%94%E7%AE%97/">lambda 演算</category>
                                 
                             
                         
@@ -1208,7 +1532,7 @@ $$&lt;/li&gt;
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/tags/lambda%E6%BC%94%E7%AE%97/">lambda演算</category>
+                                    <category domain="https://puzzledchan.github.io/tags/lambda%E6%BC%94%E7%AE%97/">lambda演算</category>
                                 
                             
                         
@@ -1218,8 +1542,8 @@ $$&lt;/li&gt;
         
             <item>
                 <title>秋招的前世今生</title>
-                <link>https://jdongchen.github.io/posts/essay/fallrecruitment/</link>
-                <guid isPermaLink="true">https://jdongchen.github.io/posts/essay/fallrecruitment/</guid>
+                <link>https://puzzledchan.github.io/posts/lifeessay/fallrecruitment/</link>
+                <guid isPermaLink="true">https://puzzledchan.github.io/posts/lifeessay/fallrecruitment/</guid>
                 <pubDate>Tue, 22 Nov 2022 14:32:12 &#43;0800</pubDate>
                 
                 <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
@@ -1243,7 +1567,7 @@ $$&lt;/li&gt;
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/categories/%E9%9A%8F%E7%AC%94/">随笔</category>
+                                    <category domain="https://puzzledchan.github.io/categories/%E9%9A%8F%E7%AC%94/">随笔</category>
                                 
                             
                         
@@ -1255,7 +1579,7 @@ $$&lt;/li&gt;
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/tags/life/">Life</category>
+                                    <category domain="https://puzzledchan.github.io/tags/life/">Life</category>
                                 
                             
                         
@@ -1265,8 +1589,8 @@ $$&lt;/li&gt;
         
             <item>
                 <title>Vim 寄存器</title>
-                <link>https://jdongchen.github.io/posts/computerskills/vimregister/</link>
-                <guid isPermaLink="true">https://jdongchen.github.io/posts/computerskills/vimregister/</guid>
+                <link>https://puzzledchan.github.io/posts/computerskills/vimregister/</link>
+                <guid isPermaLink="true">https://puzzledchan.github.io/posts/computerskills/vimregister/</guid>
                 <pubDate>Tue, 22 Nov 2022 11:39:27 &#43;0800</pubDate>
                 
                 <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
@@ -1295,7 +1619,7 @@ $$&lt;/li&gt;
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%B7%A5%E7%A8%8B%E6%8A%80%E6%9C%AF/">计算机工程技术</category>
+                                    <category domain="https://puzzledchan.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%B7%A5%E7%A8%8B%E6%8A%80%E6%9C%AF/">计算机工程技术</category>
                                 
                             
                         
@@ -1307,7 +1631,7 @@ $$&lt;/li&gt;
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/tags/vim/">vim</category>
+                                    <category domain="https://puzzledchan.github.io/tags/vim/">vim</category>
                                 
                             
                         
@@ -1317,29 +1641,29 @@ $$&lt;/li&gt;
         
             <item>
                 <title>Vim 设计哲学与基本操作</title>
-                <link>https://jdongchen.github.io/posts/computerskills/basicvim/</link>
-                <guid isPermaLink="true">https://jdongchen.github.io/posts/computerskills/basicvim/</guid>
+                <link>https://puzzledchan.github.io/posts/computerskills/basicvim/</link>
+                <guid isPermaLink="true">https://puzzledchan.github.io/posts/computerskills/basicvim/</guid>
                 <pubDate>Mon, 21 Nov 2022 18:30:15 &#43;0800</pubDate>
                 
                 <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
                 
                     <description>&lt;h2 id=&#34;vim-基础教程&#34;&gt;Vim 基础教程&lt;/h2&gt;
 &lt;h3 id=&#34;vim键位图&#34;&gt;Vim键位图&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;https://jdongchen.github.io/images/ComputerSkills/vi-vim-tutorial-svg/vi-vim-cheat-sheet-sch.jpg&#34; alt=&#34;cheat sheet&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://puzzledchan.github.io/images/ComputerSkills/vi-vim-tutorial-svg/vi-vim-cheat-sheet-sch.jpg&#34; alt=&#34;cheat sheet&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;基本编辑指令&#34;&gt;基本编辑指令&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;https://jdongchen.github.io/images/ComputerSkills/vi-vim-tutorial-svg/vi-vim-tutorial-1.svg&#34; alt=&#34;cheat sheet&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://puzzledchan.github.io/images/ComputerSkills/vi-vim-tutorial-svg/vi-vim-tutorial-1.svg&#34; alt=&#34;cheat sheet&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;操作和重复&#34;&gt;操作和重复&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;https://jdongchen.github.io/images/ComputerSkills/vi-vim-tutorial-svg/vi-vim-tutorial-2.svg&#34; alt=&#34;cheat sheet&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://puzzledchan.github.io/images/ComputerSkills/vi-vim-tutorial-svg/vi-vim-tutorial-2.svg&#34; alt=&#34;cheat sheet&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;拷贝和粘贴&#34;&gt;拷贝和粘贴&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;https://jdongchen.github.io/images/ComputerSkills/vi-vim-tutorial-svg/vi-vim-tutorial-3.svg&#34; alt=&#34;cheat sheet&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://puzzledchan.github.io/images/ComputerSkills/vi-vim-tutorial-svg/vi-vim-tutorial-3.svg&#34; alt=&#34;cheat sheet&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;搜索指令&#34;&gt;搜索指令&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;https://jdongchen.github.io/images/ComputerSkills/vi-vim-tutorial-svg/vi-vim-tutorial-4.svg&#34; alt=&#34;cheat sheet&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://puzzledchan.github.io/images/ComputerSkills/vi-vim-tutorial-svg/vi-vim-tutorial-4.svg&#34; alt=&#34;cheat sheet&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;标记和宏&#34;&gt;标记和宏&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;https://jdongchen.github.io/images/ComputerSkills/vi-vim-tutorial-svg/vi-vim-tutorial-5.svg&#34; alt=&#34;cheat sheet&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://puzzledchan.github.io/images/ComputerSkills/vi-vim-tutorial-svg/vi-vim-tutorial-5.svg&#34; alt=&#34;cheat sheet&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;各种移动&#34;&gt;各种移动&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;https://jdongchen.github.io/images/ComputerSkills/vi-vim-tutorial-svg/vi-vim-tutorial-6.svg&#34; alt=&#34;cheat sheet&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://puzzledchan.github.io/images/ComputerSkills/vi-vim-tutorial-svg/vi-vim-tutorial-6.svg&#34; alt=&#34;cheat sheet&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;各种命令&#34;&gt;各种命令&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;https://jdongchen.github.io/images/ComputerSkills/vi-vim-tutorial-svg/vi-vim-tutorial-7.svg&#34; alt=&#34;cheat sheet&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://puzzledchan.github.io/images/ComputerSkills/vi-vim-tutorial-svg/vi-vim-tutorial-7.svg&#34; alt=&#34;cheat sheet&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;vim-即语言&#34;&gt;Vim 即语言&lt;/h2&gt;
 &lt;p&gt;Vim 在某种意义上可以理解为语言，拥有名词、动词、副词等属性。&lt;/p&gt;
 &lt;h3 id=&#34;动词&#34;&gt;动词&lt;/h3&gt;
@@ -1658,7 +1982,7 @@ $$&lt;/li&gt;
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%B7%A5%E7%A8%8B%E6%8A%80%E6%9C%AF/">计算机工程技术</category>
+                                    <category domain="https://puzzledchan.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%B7%A5%E7%A8%8B%E6%8A%80%E6%9C%AF/">计算机工程技术</category>
                                 
                             
                         
@@ -1670,7 +1994,7 @@ $$&lt;/li&gt;
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/tags/vim/">vim</category>
+                                    <category domain="https://puzzledchan.github.io/tags/vim/">vim</category>
                                 
                             
                         
@@ -1680,8 +2004,8 @@ $$&lt;/li&gt;
         
             <item>
                 <title>Git 基础和常见指令</title>
-                <link>https://jdongchen.github.io/posts/computerskills/basicgit/</link>
-                <guid isPermaLink="true">https://jdongchen.github.io/posts/computerskills/basicgit/</guid>
+                <link>https://puzzledchan.github.io/posts/computerskills/basicgit/</link>
+                <guid isPermaLink="true">https://puzzledchan.github.io/posts/computerskills/basicgit/</guid>
                 <pubDate>Mon, 21 Nov 2022 18:14:11 &#43;0800</pubDate>
                 
                 <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
@@ -1690,7 +2014,7 @@ $$&lt;/li&gt;
 &lt;p&gt;在大型项目的开发中，往往涉及到多人合作，迅速同步；即使在个人的开发过程中，涉及到多台机器开发的场景也并不少见。因此，采用 &lt;a href=&#34;https://git-scm.com/&#34;&gt;Git&lt;/a&gt; 工具进行代码的分布式管理、云端同步是最佳方案。
 本笔记主要是 Git 的基础命令的学习与记录。&lt;/p&gt;
 &lt;h2 id=&#34;git-常用命令速查表&#34;&gt;Git 常用命令速查表&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;https://jdongchen.github.io/images/ComputerSkills/gitcommand.jpg&#34; alt=&#34;Git 指令&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://puzzledchan.github.io/images/ComputerSkills/gitcommand.jpg&#34; alt=&#34;Git 指令&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;git-本地命令&#34;&gt;Git 本地命令&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;创建项目目录；&lt;/li&gt;
@@ -1916,7 +2240,7 @@ $$&lt;/li&gt;
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%B7%A5%E7%A8%8B%E6%8A%80%E6%9C%AF/">计算机工程技术</category>
+                                    <category domain="https://puzzledchan.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%B7%A5%E7%A8%8B%E6%8A%80%E6%9C%AF/">计算机工程技术</category>
                                 
                             
                         
@@ -1928,7 +2252,7 @@ $$&lt;/li&gt;
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/tags/git/">Git</category>
+                                    <category domain="https://puzzledchan.github.io/tags/git/">Git</category>
                                 
                             
                         
@@ -1938,8 +2262,8 @@ $$&lt;/li&gt;
         
             <item>
                 <title>WSL 虚拟机安装</title>
-                <link>https://jdongchen.github.io/posts/configuration/wsl/</link>
-                <guid isPermaLink="true">https://jdongchen.github.io/posts/configuration/wsl/</guid>
+                <link>https://puzzledchan.github.io/posts/configuration/wsl/</link>
+                <guid isPermaLink="true">https://puzzledchan.github.io/posts/configuration/wsl/</guid>
                 <pubDate>Mon, 21 Nov 2022 18:11:36 &#43;0800</pubDate>
                 
                 <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
@@ -2009,7 +2333,7 @@ $$&lt;/li&gt;
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/categories/%E9%85%8D%E7%BD%AE/">配置</category>
+                                    <category domain="https://puzzledchan.github.io/categories/%E9%85%8D%E7%BD%AE/">配置</category>
                                 
                             
                         
@@ -2021,7 +2345,7 @@ $$&lt;/li&gt;
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/tags/linux/">Linux</category>
+                                    <category domain="https://puzzledchan.github.io/tags/linux/">Linux</category>
                                 
                             
                         
@@ -2031,8 +2355,8 @@ $$&lt;/li&gt;
         
             <item>
                 <title>QpOpt</title>
-                <link>https://jdongchen.github.io/posts/optimization/qpopt/</link>
-                <guid isPermaLink="true">https://jdongchen.github.io/posts/optimization/qpopt/</guid>
+                <link>https://puzzledchan.github.io/posts/optimization/qpopt/</link>
+                <guid isPermaLink="true">https://puzzledchan.github.io/posts/optimization/qpopt/</guid>
                 <pubDate>Mon, 21 Nov 2022 16:45:07 &#43;0800</pubDate>
                 
                 <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
@@ -2049,7 +2373,7 @@ $$&lt;/li&gt;
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/categories/%E4%BC%98%E5%8C%96/">优化</category>
+                                    <category domain="https://puzzledchan.github.io/categories/%E4%BC%98%E5%8C%96/">优化</category>
                                 
                             
                         
@@ -2063,8 +2387,8 @@ $$&lt;/li&gt;
         
             <item>
                 <title>Python 基础语法</title>
-                <link>https://jdongchen.github.io/posts/programminglanguage/pythonsyntax/</link>
-                <guid isPermaLink="true">https://jdongchen.github.io/posts/programminglanguage/pythonsyntax/</guid>
+                <link>https://puzzledchan.github.io/posts/programminglanguage/pythonsyntax/</link>
+                <guid isPermaLink="true">https://puzzledchan.github.io/posts/programminglanguage/pythonsyntax/</guid>
                 <pubDate>Mon, 21 Nov 2022 16:29:24 &#43;0800</pubDate>
                 
                 <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
@@ -2081,7 +2405,7 @@ $$&lt;/li&gt;
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</category>
+                                    <category domain="https://puzzledchan.github.io/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</category>
                                 
                             
                         
@@ -2093,7 +2417,7 @@ $$&lt;/li&gt;
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/tags/python/">Python</category>
+                                    <category domain="https://puzzledchan.github.io/tags/python/">Python</category>
                                 
                             
                         
@@ -2103,8 +2427,8 @@ $$&lt;/li&gt;
         
             <item>
                 <title>网站配置</title>
-                <link>https://jdongchen.github.io/posts/configuration/webconfig/</link>
-                <guid isPermaLink="true">https://jdongchen.github.io/posts/configuration/webconfig/</guid>
+                <link>https://puzzledchan.github.io/posts/configuration/webconfig/</link>
+                <guid isPermaLink="true">https://puzzledchan.github.io/posts/configuration/webconfig/</guid>
                 <pubDate>Mon, 21 Nov 2022 09:27:27 &#43;0800</pubDate>
                 
                 <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
@@ -2130,7 +2454,7 @@ $$&lt;/li&gt;
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/categories/%E9%85%8D%E7%BD%AE/">配置</category>
+                                    <category domain="https://puzzledchan.github.io/categories/%E9%85%8D%E7%BD%AE/">配置</category>
                                 
                             
                         
@@ -2142,7 +2466,7 @@ $$&lt;/li&gt;
                                 
                                 
                                 
-                                    <category domain="https://jdongchen.github.io/tags/blog/">Blog</category>
+                                    <category domain="https://puzzledchan.github.io/tags/blog/">Blog</category>
                                 
                             
                         
